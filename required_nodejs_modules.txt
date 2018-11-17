@@ -2,5 +2,12 @@ This project requires node.js and the following modules to be installed for succ
 install with npm install <package>[@<version>]
 
 tablesorter@2.26
+tableify
 coffeeify
 watchify
+
+#####
+curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+sudo npm install tablesorter@2.26 tableify coffeeify watchify

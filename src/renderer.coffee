@@ -73,6 +73,13 @@ class Renderer
                 dim_in: n.analysis.wIn+'x'+n.analysis.hIn
                 ch_out: n.analysis.chOut
                 dim_out: n.analysis.wOut+'x'+n.analysis.hOut
+                kernel_w: n.analysis.kernel_w
+                kernel_h: n.analysis.kernel_h
+                stride_w: n.analysis.stride_w
+                stride_h: n.analysis.stride_h
+                pad_w: n.analysis.pad_w
+                pad_h: n.analysis.pad_h
+                group: n.analysis.group
                 ops_raw: n.analysis.comp
                 mem_raw: n.analysis.mem
             }
@@ -104,6 +111,31 @@ class Renderer
         # too small, no suffix
         return num
 
+    analyzeTable: (tbl) ->
+        entry = {name: 'start'}
+        summary = []
+        for n in tbl
+            if (n.type.toLowerCase() == 'convolution' || n.type.toLowerCase() == 'deconvolution')
+                entry = {
+                    ID: n.ID
+                    name: n.name
+                    type: n.type
+                    batch: n.batch
+                    ch_in: n.ch_in
+                    dim_in: n.dim_in
+                    ch_out: n.ch_out
+                    dim_out: n.dim_out
+                    kernel_w: n.kernel_w
+                    kernel_h: n.kernel_h
+                    stride_w: n.stride_w
+                    stride_h: n.stride_h
+                    pad_w: n.pad_w
+                    pad_h: n.pad_h
+                    group: n.group
+                }
+                summary.push(entry)
+        return summary
+
     summarizeTable: (tbl) ->
         entry = {name: 'start'}
         summary = []
@@ -129,7 +161,7 @@ class Renderer
                     ID: n.ID
                     name: n.name
                     type: n.type
-                    batch: n.batchIn
+                    batch: n.batch
                     ch_in: n.ch_in
                     dim_in: n.dim_in
                     ch_out: n.ch_out
@@ -161,8 +193,10 @@ class Renderer
     renderTable: ->
         # Generate Detail Table and Summary
         detail = @generateTable()
+        architecture = @analyzeTable(detail)
         summary = @summarizeTable(detail)
-        $(@table).html('<h3>Summary:</h3><a id="summary"></a>'+Tableify(summary)+
+        $(@table).html('<h3>Architecture:</h3><a id="architecture"></a>'+Tableify(architecture)+
+                       '<h3>Summary:</h3><a id="summary"></a>'+Tableify(summary)+
                        '<h3>Details:</h3><a id="details"></a>'+Tableify(detail));
 
         # Add Sorting Headers

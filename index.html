@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
-	<meta name="description" content="Netscope Visualization Tool for Convolutional Neural Networks">
-	<meta name="keywords" content="netscope, CNN, visualization, tool, neural network, convnet, graph, deep learning">
-	<meta name="autho" content="dgschwend">
+    <meta name="description" content="Netscope Visualization Tool for Convolutional Neural Networks">
+    <meta name="keywords" content="netscope, CNN, visualization, tool, neural network, convnet, graph, deep learning">
+    <meta name="autho" content="dgschwend">
     <title>Netscope CNN Analyzer</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="assets/css/tooltip.css">
@@ -18,29 +18,30 @@
     <script src="assets/js/lib/dagre-d3.min.js"></script>
     <script src="assets/js/lib/director.min.js"></script>
     <script src="assets/js/netscope.js"></script>
-</head>
-<body>
-<div id="master-container">
-    <div id='net-column' class="column">
+  </head>
+  <body>
+    <div id="master-container">
+      <div id='net-column' class="column">
         <div id="net-spinner">
-            <img src="assets/img/loading.svg" title="Loading network..." />
+          <img src="assets/img/loading.svg" title="Loading network..." />
         </div>
         <div id="net-error" style="display:none">
-            <div class="title">Error Encountered</div>
-            <div class="msg"></div>
+          <div class="title">Error Encountered</div>
+          <div class="msg"></div>
         </div>
         <div id="net-container">
-            <div id="net-group">
-                <h1 id="net-title"></h1>
-                <svg id="net-svg"></svg>
-            </div>
+          <div id="net-group">
+            <h1 id="net-title"></h1>
+            <svg id="net-svg"></svg>
+          </div>
         </div>
         <div id="table-container">
-			<h2 id="table-header"><a id="analysis">Network Analysis</a></h2>
-			<div id="table-content">
-			</div>
+          <h2 id="table-header"><a id="analysis">Network Analysis</a>
+          </h2>
+          <div id="table-content">
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>

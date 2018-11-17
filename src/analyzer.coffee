@@ -14,6 +14,10 @@ module.exports =
             # Setup Default Values for Analysis
             d = n.analysis
             d.wIn = d.hIn = d.wOut = d.hOut = d.chIn = d.chOut = 0
+            d.kernel_w = d.kernel_h = 0
+            d.stride_w = d.stride_h = 0
+            d.pad_w = d.pad_h = 0
+            d.group = 0
             d.comp = {macc: 0, comp: 0, add: 0, div: 0, exp: 0}
             d.mem  = {activation: 0, param: 0}
             d.variants = [];
@@ -66,6 +70,14 @@ module.exports =
                     group    = params.group ? 1
                     dilation = params.dilation ? 1
                     has_bias = if (params.bias_term ? "true") == "false" then 0 else 1
+
+                    d.kernel_w = kernel_w
+                    d.kernel_h = kernel_h
+                    d.stride_w = stride_w
+                    d.stride_h = stride_h
+                    d.pad_w = pad_w
+                    d.pad_h = pad_h
+                    d.group = group
 
                     # according to http://caffe.berkeleyvision.org/tutorial/layers.html and https://github.com/BVLC/caffe/issues/3656
                     kernel = dilation*(kernel_w-1)+1
@@ -156,6 +168,14 @@ module.exports =
                     isglobal = params.global_pooling ? 0
                     pooltype = (params.pool ? 'MAX').toUpperCase()
                     d.chOut = d.chIn
+
+                    d.kernel_w = kernel_w
+                    d.kernel_h = kernel_h
+                    d.stride_w = stride_w
+                    d.stride_h = stride_h
+                    d.pad_w = pad_w
+                    d.pad_h = pad_h
+
                     # according to http://caffe.berkeleyvision.org/tutorial/layers.html and https://github.com/BVLC/caffe/issues/3656
                     d.wOut = Math.ceil((d.wIn + 2*pad_w - kernel_w) / stride_w) + 1
                     d.hOut = Math.ceil((d.hIn + 2*pad_h - kernel_h) / stride_h) + 1
@@ -289,9 +309,19 @@ module.exports =
                     pad_w    = params.pad_w ? (params.pad ? 0)
                     pad_h    = params.pad_h ? (params.pad ? 0)
                     numout   = params.num_output
+                    group    = params.group ? 1
                     d.wOut = (stride_w*(d.wIn-1)+kernel_w-2*pad_w)
                     d.hOut = (stride_h*(d.hIn-1)+kernel_h-2*pad_h)
                     d.chOut = numout
+
+                    d.kernel_w = kernel_w
+                    d.kernel_h = kernel_h
+                    d.stride_w = stride_w
+                    d.stride_h = stride_h
+                    d.pad_w = pad_w
+                    d.pad_h = pad_h
+                    d.group = group
+
                     #computation
                     d.comp.macc = d.chIn*d.chOut*d.wOut*d.hOut*(kernel_w/stride_w)*(kernel_h/stride_h)*d.batchOut
                     #memory
