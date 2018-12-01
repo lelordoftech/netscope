@@ -19353,11 +19353,11 @@ module.exports = Renderer = class Renderer {
   }
 
   renderTable() {
-    var $node_elem, $table_elem, architecture, areatbl, detail, dim_in, entry, j, k, len, len1, line, ref, ref1, ref2, ref3, ref4, row, row_array, scroll_to, suffix, summary, summary_body, summary_table;
+    var $node_elem, $table_elem, architecture, areatbl, detail, dim_in, entry, j, k, len, len1, line, ref, ref1, ref2, ref3, ref4, row, row_array, scroll_to, suffix, summary_body, summary_table;
     // Generate Detail Table and Summary
     detail = this.generateTable();
     architecture = this.analyzeTable(detail);
-    summary = this.summarizeTable(detail);
+    //summary = @summarizeTable(detail)
     $(this.table).html('<h3>Architecture:</h3><a id="architecture"></a>' + Tableify(architecture));
     $(this.table + ' table').tablesorter();
     // Add Click-to-Scroll Handlers
