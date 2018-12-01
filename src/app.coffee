@@ -38,14 +38,23 @@ class AppController
         $('.qtip').remove()
         @renderer = new Renderer net, @svg, @table
 
-        if not window.do_variants_analysis
-            $("<br>").appendTo @table 
-            extendlink = $('<a>Excel-compatible Analysis Results (experimental)</a>')
-            extendlink.click( => 
-                window.do_variants_analysis = true
-                @renderer.renderTable()
-            )
-            extendlink.appendTo @table 
+        # Navbar
+        $('#show-editor').click( =>
+          @showEditor(loader)
+        )
+        $('#hide-editor').click( =>
+          $('#edit-column').width(0+'%')
+          $('#net-column').width(100+'%')
+          $('#table-container').width(100+'%')
+        )
+        $('#show-graph').click( =>
+          $('#net-column').show()
+          $('#table-container').hide()
+        )
+        $('#show-table').click( =>
+          $('#net-column').hide()
+          $('#table-container').show()
+        )
 
         @inProgress = false
 

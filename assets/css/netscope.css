@@ -15,9 +15,27 @@ h1, h2, h3 {
 /* Layout */
 
 #master-container {
-    /*overflow: hidden;
+    overflow: hidden;
     height: 100%;
-    width: 100%;*/
+    width: 100%;
+}
+
+/* Style the navbar */
+#navbar {
+  overflow: hidden;
+  height: 5%;
+  background-color: #333;
+}
+
+/* Navbar links */
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 #net-column {
@@ -27,8 +45,8 @@ h1, h2, h3 {
 .column {
     float: left;
     width: 30%;
-    height: 100%;
-    overflow: scroll;
+    height: 95%;
+    overflow: auto;
 }
 
 /* Editor */
@@ -53,13 +71,16 @@ h1, h2, h3 {
 
 #table-container {
     display: none;
-    text-align: center;   
-    padding-top:20px; 
+    text-align: center;
+    float: left;
+    width: 100%;
+    height: 95%;
+    overflow: auto;
 }
 
 #table-header {
-    padding-top: 20px;
-    border-top: 1px solid #554037;
+    padding:20px;
+    border-bottom: 1px solid #554037;
     min-width: 400px;
     text-align: center;
 }
@@ -72,7 +93,6 @@ h1, h2, h3 {
     display: inline-block;
     text-align: left;
     width:auto;
-    
 }
 
 #net-group {

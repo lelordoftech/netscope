@@ -4,10 +4,21 @@ install with npm install <package>[@<version>]
 tablesorter@2.26
 tableify
 coffeeify
-watchify
+coffeescript
+watchify (globall)
 
 #####
 curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-sudo npm install tablesorter@2.26 tableify coffeeify watchify
+sudo npm install -g watchify
+sudo npm install tablesorter@2.26 tableify coffeeify coffeescript
+
+#####
+Example:
+Ubuntu 16.04 LTS
+
+nodejs v11.2.0
+node v11.2.0
+npm 6.4.1
+

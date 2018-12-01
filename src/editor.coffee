@@ -1,11 +1,13 @@
 module.exports =
 class Editor
+    editorWidthPercentage = 30;
     constructor: (@loaderFunc, loader) ->
-        editorWidthPercentage = 30;
-        $editorBox = $($.parseHTML '<div class="column"></div>')
+        $editorBox = $($.parseHTML '<div id="edit-column" class="column"></div>')
         $editorBox.width(editorWidthPercentage+'%')
         $('#net-column').width((100-editorWidthPercentage)+'%')
-        $('#master-container').prepend $editorBox
+        $('#table-container').width((100-editorWidthPercentage)+'%')
+        #$('#master-container').prepend $editorBox
+        $editorBox.insertBefore('#net-column')
         preset = loader.dataLoaded ? '# Enter your network definition here.\n# Use Shift+Enter to update the visualization.'
         @editor = CodeMirror $editorBox[0],
             value: preset
@@ -16,6 +18,9 @@ class Editor
     reload: (@loaderFunc, loader) ->
         preset = loader.dataLoaded ? '# Enter your network definition here.\n# Use Shift+Enter to update the visualization.'
         @editor.setValue(preset)
+        $('#edit-column').width(editorWidthPercentage+'%')
+        $('#net-column').width((100-editorWidthPercentage)+'%')
+        $('#table-container').width((100-editorWidthPercentage)+'%')
         #alert(preset)
 
     onKeyDown: (e) ->

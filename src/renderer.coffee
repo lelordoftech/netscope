@@ -195,9 +195,9 @@ class Renderer
         detail = @generateTable()
         architecture = @analyzeTable(detail)
         summary = @summarizeTable(detail)
-        $(@table).html('<h3>Architecture:</h3><a id="architecture"></a>'+Tableify(architecture)+
-                       '<h3>Summary:</h3><a id="summary"></a>'+Tableify(summary)+
-                       '<h3>Details:</h3><a id="details"></a>'+Tableify(detail));
+        $(@table).html('<h3>Architecture:</h3><a id="architecture"></a>'+Tableify(architecture));
+                      #+'<h3>Summary:</h3><a id="summary"></a>'+Tableify(summary)
+                      #+'<h3>Details:</h3><a id="details"></a>'+Tableify(detail)
 
         # Add Sorting Headers
         $(@table+' table').tablesorter()

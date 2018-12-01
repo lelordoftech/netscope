@@ -1,0 +1,26 @@
+{
+  "name": "netscope",
+  "version": "1.0.0",
+  "description": "Network visualization tool",
+  "scripts": {
+    "start": "watchify -v -t coffeeify src/netscope.coffee -o assets/js/netscope.js",
+    "test": "mocha --compilers coffee:coffee-script/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lelordoftech/netscope.git"
+  },
+  "author": "VuongLe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lelordoftech/netscope/issues"
+  },
+  "homepage": "https://github.com/lelordoftech/netscope#readme",
+  "devDependencies": {
+    "coffeeify": "^3.0.1",
+    "coffeescript": "^2.3.2",
+    "tableify": "^1.1.0",
+    "tablesorter": "^2.26.6",
+    "watchify": "^3.7.0"
+  }
+}

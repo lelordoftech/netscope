@@ -16844,7 +16844,7 @@ module.exports = AppController = class AppController {
   }
 
   completeLoading(net, loader) {
-    var editlink, extendlink;
+    var editlink;
     this.$spinner.hide();
     $('#net-title').html(net.name.replace(/_/g, ' '));
     $('title').text(net.name.replace(/_/g, ' ') + ' — Netscope CNN Analyzer');
@@ -16858,15 +16858,23 @@ module.exports = AppController = class AppController {
     $(this.svg).empty();
     $('.qtip').remove();
     this.renderer = new Renderer(net, this.svg, this.table);
-    if (!window.do_variants_analysis) {
-      $("<br>").appendTo(this.table);
-      extendlink = $('<a>Excel-compatible Analysis Results (experimental)</a>');
-      extendlink.click(() => {
-        window.do_variants_analysis = true;
-        return this.renderer.renderTable();
-      });
-      extendlink.appendTo(this.table);
-    }
+    // Navbar
+    $('#show-editor').click(() => {
+      return this.showEditor(loader);
+    });
+    $('#hide-editor').click(() => {
+      $('#edit-column').width(0 + '%');
+      $('#net-column').width(100 + '%');
+      return $('#table-container').width(100 + '%');
+    });
+    $('#show-graph').click(() => {
+      $('#net-column').show();
+      return $('#table-container').hide();
+    });
+    $('#show-table').click(() => {
+      $('#net-column').hide();
+      return $('#table-container').show();
+    });
     return this.inProgress = false;
   }
 
@@ -18732,45 +18740,58 @@ module.exports = (function() {
 },{}],8:[function(require,module,exports){
 var Editor;
 
-module.exports = Editor = class Editor {
-  constructor(loaderFunc, loader) {
-    var $editorBox, editorWidthPercentage, preset, ref;
-    this.loaderFunc = loaderFunc;
-    editorWidthPercentage = 30;
-    $editorBox = $($.parseHTML('<div class="column"></div>'));
-    $editorBox.width(editorWidthPercentage + '%');
-    $('#net-column').width((100 - editorWidthPercentage) + '%');
-    $('#master-container').prepend($editorBox);
-    preset = (ref = loader.dataLoaded) != null ? ref : '# Enter your network definition here.\n# Use Shift+Enter to update the visualization.';
-    this.editor = CodeMirror($editorBox[0], {
-      value: preset,
-      lineNumbers: true,
-      lineWrapping: true
-    });
-    this.editor.on('keydown', (cm, e) => {
-      return this.onKeyDown(e);
-    });
-  }
+module.exports = Editor = (function() {
+  var editorWidthPercentage;
 
-  reload(loaderFunc, loader) {
-    var preset, ref;
-    this.loaderFunc = loaderFunc;
-    preset = (ref = loader.dataLoaded) != null ? ref : '# Enter your network definition here.\n# Use Shift+Enter to update the visualization.';
-    return this.editor.setValue(preset);
-  }
-
-  //alert(preset)
-  onKeyDown(e) {
-    if (e.shiftKey && e.keyCode === 13) {
-      // Using onKeyDown lets us prevent the default action,
-      // even if an error is encountered (say, due to parsing).
-      // This would not be possible with keymaps.
-      e.preventDefault();
-      return this.loaderFunc(this.editor.getValue());
+  class Editor {
+    constructor(loaderFunc, loader) {
+      var $editorBox, preset, ref;
+      this.loaderFunc = loaderFunc;
+      $editorBox = $($.parseHTML('<div id="edit-column" class="column"></div>'));
+      $editorBox.width(editorWidthPercentage + '%');
+      $('#net-column').width((100 - editorWidthPercentage) + '%');
+      $('#table-container').width((100 - editorWidthPercentage) + '%');
+      //$('#master-container').prepend $editorBox
+      $editorBox.insertBefore('#net-column');
+      preset = (ref = loader.dataLoaded) != null ? ref : '# Enter your network definition here.\n# Use Shift+Enter to update the visualization.';
+      this.editor = CodeMirror($editorBox[0], {
+        value: preset,
+        lineNumbers: true,
+        lineWrapping: true
+      });
+      this.editor.on('keydown', (cm, e) => {
+        return this.onKeyDown(e);
+      });
     }
-  }
 
-};
+    reload(loaderFunc, loader) {
+      var preset, ref;
+      this.loaderFunc = loaderFunc;
+      preset = (ref = loader.dataLoaded) != null ? ref : '# Enter your network definition here.\n# Use Shift+Enter to update the visualization.';
+      this.editor.setValue(preset);
+      $('#edit-column').width(editorWidthPercentage + '%');
+      $('#net-column').width((100 - editorWidthPercentage) + '%');
+      return $('#table-container').width((100 - editorWidthPercentage) + '%');
+    }
+
+    //alert(preset)
+    onKeyDown(e) {
+      if (e.shiftKey && e.keyCode === 13) {
+        // Using onKeyDown lets us prevent the default action,
+        // even if an error is encountered (say, due to parsing).
+        // This would not be possible with keymaps.
+        e.preventDefault();
+        return this.loaderFunc(this.editor.getValue());
+      }
+    }
+
+  };
+
+  editorWidthPercentage = 30;
+
+  return Editor;
+
+}).call(this);
 
 
 },{}],9:[function(require,module,exports){
@@ -19337,7 +19358,7 @@ module.exports = Renderer = class Renderer {
     detail = this.generateTable();
     architecture = this.analyzeTable(detail);
     summary = this.summarizeTable(detail);
-    $(this.table).html('<h3>Architecture:</h3><a id="architecture"></a>' + Tableify(architecture) + '<h3>Summary:</h3><a id="summary"></a>' + Tableify(summary) + '<h3>Details:</h3><a id="details"></a>' + Tableify(detail));
+    $(this.table).html('<h3>Architecture:</h3><a id="architecture"></a>' + Tableify(architecture));
     $(this.table + ' table').tablesorter();
     // Add Click-to-Scroll Handlers
     // Closure Function that executes scroll:
