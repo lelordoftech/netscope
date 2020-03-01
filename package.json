@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lelordoftech/netscope.git"
+    "url": "git+https://github.com/vuonglequoc/netscope.git"
   },
   "author": "VuongLe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lelordoftech/netscope/issues"
+    "url": "https://github.com/vuonglequoc/netscope/issues"
   },
-  "homepage": "https://github.com/lelordoftech/netscope#readme",
+  "homepage": "https://github.com/vuonglequoc/netscope#readme",
   "devDependencies": {
     "coffeeify": "^3.0.1",
     "coffeescript": "^2.3.2",
