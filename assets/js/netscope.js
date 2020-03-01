@@ -16755,6 +16755,18 @@ module.exports = Analyzer = class Analyzer {
           //memory
           d.mem.activation = d.wOut * d.hOut * d.chOut * d.batchOut; // unknown layer;  print error message;
           break;
+        case "upsample":
+          params = n.attribs.upsample_param;
+          scale = params.scale
+          //dimensions
+          d.wOut = d.wIn * scale;
+          d.hOut = d.hIn * scale;
+          d.chOut = d.chIn;
+          //computation
+          // --none
+          //memory
+          d.mem.activation = d.wOut * d.hOut * d.chOut * d.batchOut;
+          break;
         default:
           onerror('Unknown Layer: ' + layertype);
           console.log(n);
